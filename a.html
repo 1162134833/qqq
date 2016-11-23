@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹幕</title>
+	<style>
+	*{margin:0;padding:0;}
+	#xb{
+		width: 500px;
+		height: 400px;
+		background: #000;
+		margin:20px auto;
+		border:2px solid green;
+		overflow: hidden;
+	}
+	#db{
+		width: 800px;
+		height: 400px;
+		position: relative;
+	}
+	#cd{
+		width: 500px;
+		/*height: 80px;*/
+		border:2px solid red;
+		margin:-20px auto;
+		text-align: center;
+		padding:28px 0 28px 0;
+		display: none;
+	}
+	#dl{
+		width: 500px;
+		font-size: 20px;
+		border:2px solid red;
+		margin:-20px auto;
+		text-align: center;
+		padding: 30px 0 30px 0;
+	}
+	#de1,#de2{
+		color:red;
+		cursor:pointer;
+	}
+	.ss{
+		/*width: 50px;*/
+		/*height: 50px;*/
+		font-size: 18px;
+		position:absolute;
+	}
+	input{
+		font-size: 20px;
+	}
+	#sq{
+		width: 400px;
+		height: 350px;
+		text-align: center;
+		background: #ccc;
+		font-family: '黑体';
+		border:1px solid #3c3c3c;
+		position: absolute;
+		top:0px;
+		left:0px;
+		display: none;
+	}
+	#sq .p1{
+		margin-top: 35px;
+	}
+	#sq p{
+		margin-top: 10px;
+	}
+	#inp1,#inp2{
+		width: 235px;
+		height: 35px;
+	}
+	#inp3{
+		width: 91px;
+		height: 33px;
+	}
+	.p3{
+		float: left;
+		margin-left: 52px;
+	}
+	#inp4{
+		width: 94px;
+		height: 37px;
+		border:none;
+		background:#50E2C4; 
+		border:1px solid #A5E250;
+		margin-left: 17px;
+		font-size: 25px;
+	}
+	#sq .p4{
+		margin-top: 60px;
+	}
+	#inp5,#inp6{
+		width: 92px;
+		height: 42px;
+		border-radius:5px;
+		background: #5383F9;
+		color:#A550E2;
+	}
+	#inp6{
+		margin-left: 34px;
+	}
+	#cha{
+		position: absolute;
+		top:5px;
+		right: 5px;
+		cursor: pointer;
+	}
+	</style>
+</head>
+<body>
+	<div id="xb">
+		<div id="db"></div>
+	</div>
+	<div id="cd">
+		<input id="in1" type="button" value="关闭弹幕" />
+		<input id="in2" type="text" value="" />
+		<input id="in3" type="button" value="发射弹幕" />
+	</div>
+	<div id="dl">
+	发送弹幕请 <span id="de1">登录</span> 或者<span id="de2"> 注册</span> 账号
+	</div>
+	<div id="sq">
+	<span id="cha">×</span>
+		<p class="p1">账号：<input id="inp1" type="text" value='' /></p><br/>
+		<p>密码：<input id="inp2" type="text" value='' /></p><br/>
+		<p class="p3">验证码：<input id="inp3" type="text" value='' /><input id="inp4" type="button" value='' /></p><br/>
+		<p class="p4">
+		<input id="inp5" type="button" value='登录' /><input id="inp6" type="button" value='注册' />
+		</p>
+	</div>
+</body>
+<script type="text/javascript">
+	var xb=document.getElementById('xb');
+	var db=document.getElementById('db');
+	var cd=document.getElementById('cd');
+	var in1=document.getElementById('in1');
+	var in2=document.getElementById('in2');
+	var in3=document.getElementById('in3');
+	var s=true;
+	var sq=document.getElementById('sq');
+	var timsz=null;
+	// var tim=null;	
+	function str(){
+			var box=document.createElement('div');
+			box.setAttribute('class','ss');
+			// box.style.background='rgb('+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+')';
+			 box.style.color='rgb('+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+')';
+			 box.innerHTML=in2.value;
+			box.style.left=Math.floor(Math.random()*300+500)+'px';
+			box.style.top=Math.floor(Math.random()*350)+'px';
+			db.appendChild(box);
+			var lef=box.offsetLeft;
+			var tim2=null;
+		function hd(){
+			lef--;
+			if (lef==0) {
+				clearInterval(tim2);
+				db.removeChild(box);
+			}
+			box.style.left=lef+'px';
+		}
+	tim2=setInterval(hd,10);
+}
+// tim=setInterval(str,1000);
+ in3.onclick=function (){
+ 	str();
+ 	in2.value='';
+ }
+ in1.onclick=function (){
+ 	if (s==true) {
+ 	db.style.display='none';
+ 	in1.value='打开弹幕';
+ 	s=false;
+ }else{
+ 	db.style.display='block';
+ 	in1.value='关闭弹幕';
+ 	s=true;
+ }
+}
+// 自动适中
+	function zdsz(){
+		var sw=document.documentElement.clientWidth||document.body.clientWidth;
+		var swl=(sw-sq.offsetWidth)/2;
+		sq.style.left=swl+'px';
+		sq.style.top=30+'px';
+	}
+	timsz=setInterval(zdsz,10);
+// 验证码
+	var yzm=[1,2,3,4,5,6,7,8,9,0,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+	var inp3=document.getElementById('inp3');
+	var inp4=document.getElementById('inp4');
+	var inp5=document.getElementById('inp5');
+	var cha=document.getElementById('cha');
+	var yzzf=4;
+	var yyzz=null;
+	function zcyz(){
+			yyzz='';
+		for (var i = 0; i < 4; i++) {
+			yyzz+=yzm[Math.floor(Math.random()*26)]
+		}
+		inp4.value=yyzz;
+	}
+	zcyz();
+	inp4.onclick=function () {
+			zcyz();
+	}
+	function val(){
+		inp1.value='';
+		inp2.value='';
+		inp3.value='';
+	}
+	inp5.onclick=function () {
+			var invl=inp3.value.toUpperCase();
+			console.log(invl);
+		if (invl.length!=yzzf||invl=='') {
+			alert('请输入正确格式验证码');
+			zcyz();
+			val();
+		}else if (invl==yyzz&&inp1.value=='12345'&&inp2.value=='qwert'){
+				alert('登陆成功');
+				sq.style.display='none';
+				dl.style.display='none';
+				cd.style.display='block';
+		}else{
+				alert('输入错误');
+				zcyz();
+				val();
+		}
+}
+cha.onclick=function () {
+	sq.style.display='none';
+}
+de1.onclick=function (){
+	sq.style.display='block';
+}
+de2.onclick=function () {
+	alert('嘿咻嘿咻，你没资格注册哦');
+}
+</script>
+</html>
